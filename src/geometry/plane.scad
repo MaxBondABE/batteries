@@ -10,7 +10,7 @@ function circlePts(rad) = [
 
 module batteriesCircle(rad) { polygon(circlePts(rad)); }
 
-function ellipsePts(width, height) = [for(t=angles()) 1/2 * [w*cos(t), h*sin(t)]];
+function ellipsePts(width, height) = [for(t=angles()) 1/2 * [width*cos(t), height*sin(t)]];
 
 module ellipse(width, height) { polygon(ellipsePts(width, height)); }
 
