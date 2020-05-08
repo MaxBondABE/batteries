@@ -9,7 +9,8 @@ function prismPts(sides, sideLen, height, center=false) = [
     each for(_z = [if (center) [-height/2, height/2] else [0, height]].x)
     translatePts(z=_z, pts=poly)
 ];
-// TODO prismFaces
+
+// TODO Refactor to us a prismFaces() function like torus().
 module prism(sides, sideLen, height, center=false) {
     bottomMin = 0;
     bottomMax = sides - 1;
@@ -34,6 +35,11 @@ module prism(sides, sideLen, height, center=false) {
     );
 }
 
+/*
+Generates points on a torus by generating circles, standing them on on their side,
+translating them out to meet the edge of the torus, and rotating them about the
+origin.
+*/
 function torusPts(minorRad, majorRad, minorSegments=undef, majorSegments=undef) = [
     let(c=xyToXYZ(circlePts(minorRad, $fn=minorSegments)))
     each for(t=angles($fn=majorSegments))
@@ -45,6 +51,14 @@ function torusPts(minorRad, majorRad, minorSegments=undef, majorSegments=undef) 
         )))
 ];
 
+/*
+Generates faces of a torus by taking each point, and drawing a box to include the
+points above it, the point above and to the right, and the point to the immediate
+right.
+
+This box is not coplanar, so it's further divided along it's diagonal
+into two triangles, as any three points are coplanar.
+*/
 function torusFaces(minorSegments, majorSegments) =
     let(vertexes=(minorSegments*majorSegments))
     [ each for (major=iter(majorSegments), minor=iter(minorSegments))
