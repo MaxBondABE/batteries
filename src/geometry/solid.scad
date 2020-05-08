@@ -38,10 +38,10 @@ function torusPts(minorRad, majorRad, minorSegments=undef, majorSegments=undef) 
     let(c=xyToXYZ(circlePts(minorRad, $fn=minorSegments)))
     each for(t=angles($fn=majorSegments))
         rotZPts(t,
-        pts=translatePts(x=majorRad,
-        pts=rotXPts(90,
+            pts=translatePts(x=majorRad,
+            pts=rotXPts(90,
 
-        pts=c
+            pts=c
         )))
 ];
 
